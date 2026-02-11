@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Замовлення прийнято{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <div class="display-1 text-success mb-4">
+        <i class="bi bi-check-circle">✓</i>
+    </div>
+    <h1 class="display-5 fw-bold">Дякуємо за замовлення!</h1>
+    <p class="lead mb-4">Ваше замовлення <strong>№{{ order.id }}</strong> успішно оформлено.</p>
+    <p class="text-muted">Ми зв'яжемося з вами найближчим часом для підтвердження доставки за адресою: {{ order.address }}.</p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="{% url 'menu-list' %}" class="btn btn-primary btn-lg px-4 gap-3">Повернутися до меню</a>
+        <a href="#" class="btn btn-outline-secondary btn-lg px-4">Мої замовлення</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Користувачі{% endblock %}
+
+{% block content %}
+<h2>Список користувачів</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Імʼя</th>
+            <th>Прізвище</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in object_list %}
+            <tr>
+                <td>{{ profile.user.username }}</td>
+                <td>{{ profile.first_name }}</td>
+                <td>{{ profile.last_name }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">Користувачів немає</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

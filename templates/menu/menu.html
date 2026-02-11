@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Меню ресторану{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <h5 class="mb-3">Пошук страв</h5>
+        <form method="get" class="mb-4">
+            <input type="text" name="q" class="form-control" placeholder="Наприклад: Борщ" value="{{ request.GET.q }}">
+        </form>
+
+        <h5 class="mb-3">Категорії</h5>
+        <div class="list-group">
+            <a href="{% url 'menu-list' %}" class="list-group-item list-group-item-action {% if not request.GET.category %}active{% endif %}">
+                Усі страви
+            </a>
+            {% for cat in categories %}
+            <a href="?category={{ cat.id }}" class="list-group-item list-group-item-action {% if request.GET.category == cat.id|stringformat:'s' %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            {% for dish in dishes %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if dish.img %}
+                        <img src="{{ dish.img.url }}" class="card-img-top" alt="{{ dish.name }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'dish-detail' dish.pk %}" class="text-decoration-none text-dark">
+                            {{ dish.name }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">{{ dish.description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success fs-6">{{ dish.price }} грн</span>
+                            <span class="badge bg-secondary fs-6">{{ dish.category.first.name }}</span>
+                            <small class="text-secondary">{{ dish.weight }} г</small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="{% url 'cart:cart-add' dish.id %}" class="btn btn-primary w-100">
+                        Додати в кошик
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="alert alert-info">На жаль, страв за вашим запитом не знайдено.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
