@@ -22,7 +22,7 @@ RUN python manage.py makemigrations
 
 RUN python manage.py migrate
 
-RUN python manage.py createsuperuser -noinput -username admin password admin
+RUN python manage.py createsuperuser --noinput --username admin --password admin
 
 EXPOSE 8000
 
